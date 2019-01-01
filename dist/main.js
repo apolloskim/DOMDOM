@@ -86,14 +86,27 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/domdom_node_collection.js":
+/*!***************************************!*\
+  !*** ./src/domdom_node_collection.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return DOMDOMNodeCollection; });\nclass DOMDOMNodeCollection {\n\n  constructor(htmlElements) {\n    this.htmlElements = Object.assign([], htmlElements);\n  }\n\n  html(arg) {\n    if (arg !== undefined) {\n      this.htmlElements.map(e => e.innerHTML = arg);\n    } else {\n      return this.htmlElements[0].innerHTML;\n    }\n  }\n\n  empty() {\n    this.html('');\n  }\n\n  append(arg) {\n    if (arg instanceof DOMDOMNodeCollection) {\n      this.htmlElements.forEach(t => {\n        arg.htmlElements.forEach(e => t.innerHTML += e.outerHTML);\n      });\n    } else if (typeof arg === 'string') {\n      this.htmlElements.forEach(t => t.innerHTML += arg);\n    } else if (typeof arg === 'object' && arg instanceof HTMLElement) {\n      this.htmlElements.forEach(t => t.innerHTML += arg.outerHTML);\n    }\n  }\n\n  attr(arg) {\n    return this.htmlElements[0].getAttribute(arg);\n  }\n\n  addClass(arg) {\n    if (typeof arg === 'function') {\n      let count = 0;\n      this.htmlElements.forEach(h => {\n        h.classList.add(arg(count));\n        count++;\n      });\n    } else if (typeof arg === 'string') {\n      this.htmlElements.forEach(h => h.classList.add(arg));\n    }\n  }\n\n  removeClass(arg) {\n    if (arg === undefined) {\n      this.htmlElements.forEach(h => h.className= \"\");\n    } else if (typeof arg === 'string') {\n\n      // in case there are more than one classnames to be deleted,\n      // turn the string into an array of strings.\n      let argArr = arg.split(\" \");\n\n      // for each classname in the array, do another for each loop on the\n      // elements, then do another for loop on each of the classnames\n      // in a given element.\n      argArr.forEach(a => {\n        this.htmlElements.forEach(h => {\n          let newArr = [];\n          let classNameStr = h.className;\n          classNameStr = classNameStr.split(\" \");\n          classNameStr.forEach(c => {\n            if (a !== c) {\n              newArr.push(c);\n            }\n          });\n          h.className = newArr.join(' ');\n        });\n      });\n    }\n\n    \n  }\n\n}\n\n\n//# sourceURL=webpack:///./src/domdom_node_collection.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("\nwindow.$l = arg => {\n  if (typeof arg === \"string\") {\n    let nodeListArr = document.querySelectorAll(arg);\n    nodeListArr = Object.assign([], nodeListArr);\n    return nodeListArr;\n  }\n}\n\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _domdom_node_collection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./domdom_node_collection */ \"./src/domdom_node_collection.js\");\n\n\nwindow.$l = arg => {\n  if (typeof arg === \"string\") {\n    let nodeListArr = document.querySelectorAll(arg);\n    nodeListArr = Object.assign([], nodeListArr);\n    return new _domdom_node_collection__WEBPACK_IMPORTED_MODULE_0__[\"default\"](nodeListArr);\n  } else if (typeof arg === 'object' && arg instanceof HTMLElement) {\n    const htmlArr = [arg];\n    return new _domdom_node_collection__WEBPACK_IMPORTED_MODULE_0__[\"default\"](htmlArr);\n  }\n}\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 

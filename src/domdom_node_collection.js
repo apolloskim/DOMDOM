@@ -14,6 +14,7 @@ export default class DOMDOMNodeCollection {
 
   empty() {
     this.html('');
+    return this.htmlElements;
   }
 
   append(arg) {
@@ -26,52 +27,68 @@ export default class DOMDOMNodeCollection {
     } else if (typeof arg === 'object' && arg instanceof HTMLElement) {
       this.htmlElements.forEach(t => t.innerHTML += arg.outerHTML);
     }
+    return this.htmlElements;
   }
 
-  attr(arg) {
-    return this.htmlElements[0].getAttribute(arg);
+  attr(arg, str) {
+    if (str && typeof str === 'string') {
+      this.htmlElements.forEach(e => e.setAttribute(arg, str));
+      return this.htmlElements;
+    } else {
+      return this.htmlElements[0].getAttribute(arg);
+    }
   }
 
   addClass(arg) {
-    if (typeof arg === 'function') {
-      let count = 0;
-      this.htmlElements.forEach(h => {
-        h.classList.add(arg(count));
-        count++;
-      });
-    } else if (typeof arg === 'string') {
-      this.htmlElements.forEach(h => h.classList.add(arg));
-    }
+    let newArg = arg.split(' ');
+    this.htmlElements.forEach(h => h.classList.add(...newArg));
+    return this.htmlElements;
   }
 
   removeClass(arg) {
     if (arg === undefined) {
       this.htmlElements.forEach(h => h.className= "");
     } else if (typeof arg === 'string') {
-
-      // in case there are more than one classnames to be deleted,
-      // turn the string into an array of strings.
-      let argArr = arg.split(" ");
-
-      // for each classname in the array, do another for each loop on the
-      // elements, then do another for loop on each of the classnames
-      // in a given element.
-      argArr.forEach(a => {
-        this.htmlElements.forEach(h => {
-          let newArr = [];
-          let classNameStr = h.className;
-          classNameStr = classNameStr.split(" ");
-          classNameStr.forEach(c => {
-            if (a !== c) {
-              newArr.push(c);
-            }
-          });
-          h.className = newArr.join(' ');
-        });
-      });
+      let newArg = arg.split(' ');
+      this.htmlElements.forEach(h => h.classList.remove(...newArg));
     }
+    return this.htmlElements;
+  }
 
-    
+  children() {
+    let childNodes = [];
+    this.htmlElements.forEach(h => {
+      const nodeChild = Object.assign([], h.children);
+      childNodes = childNodes.concat(nodeChild);
+    });
+    return new DOMDOMNodeCollection(childNodes);
+  }
+
+  parent() {
+    let parentNodes = [];
+    this.htmlElements.forEach(h => {
+      if (!h.parentNode.visited) {
+        parentNodes.push(h.parentNode);
+        h.parentNode.visited = true;
+      }
+    });
+
+    parentNodes.forEach(n => n.visited = false);
+    return new DOMDOMNodeCollection(parentNodes);
+  }
+
+  find(arg) {
+    let foundNodes = [];
+
+    this.htmlElements.forEach(h => {
+      const selectedNodes = h.querySelectorAll(arg);
+      foundNodes = foundNodes.concat(Object.assign([], selectedNodes));
+    });
+    return new DOMDOMNodeCollection(foundNodes);
+  }
+
+  remove() {
+    this.htmlElements.forEach(node => node.parentNode.removeChild(node));
   }
 
 }

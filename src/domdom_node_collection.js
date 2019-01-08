@@ -88,7 +88,25 @@ export default class DOMDOMNodeCollection {
   }
 
   remove() {
-    this.htmlElements.forEach(node => node.parentNode.removeChild(node));
+    this.htmlElements.forEach(h => h.parentNode.removeChild(h));
   }
 
+  on(e, cb) {
+    this.htmlElements.forEach(h => {
+      h.addEventListener(e, cb);
+      if (h[e] === undefined) {
+        h[e] = [];
+      }
+      h[e].push(cb);
+    });
+  }
+
+  off(e) {
+    this.htmlElements.forEach(h => {
+      h[e].forEach(cb => h.removeEventListener(e, cb));
+      h[e] = [];
+    });
+  }
+
+  
 }

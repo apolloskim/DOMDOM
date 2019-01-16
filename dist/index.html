@@ -1,18 +1,164 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
+    <style media="screen">
+
+      html {
+        background: #FFBF00 no-repeat center center fixed;
+        background-repeat: no-repeat;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        font-family: 'Karla', sans-serif;
+        color: #eb8181;
+      }
+
+      body {
+        text-align: center;
+        list-style-position: inside;
+      }
+
+      .main-container {
+        height: 150px;
+        width: 40%;
+        margin: 30px 20px;
+        padding: 30px;
+        background-color: #2E2E30;
+        -webkit-box-shadow: 4px 6px 25px -4px rgba(0,0,0,0.71);
+        -moz-box-shadow: 4px 6px 25px -4px rgba(0,0,0,0.71);
+        box-shadow: 4px 6px 25px -4px rgba(0,0,0,0.71);
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border: 0px solid #000000;
+      }
+
+      ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+      }
+
+
+      .lists {
+        cursor: pointer;
+      }
+
+      .lists:hover {
+        color: white;
+      }
+
+      h1 {
+        margin-top: 50px;
+        color: #111;
+        font-weight: bold;
+        font-size: 40px;
+      }
+
+      .choices {
+        color: #FFFFFF;
+        display: flex;
+        list-style-type: lower-alpha;
+        list-style-position: inside;
+        padding: 0;
+      }
+
+      .logo {
+        background-image: url("/Users/apollos/domdom/dist/logo.png");
+        background-repeat: no-repeat;
+        height: 120px;
+        background-size: contain;
+        background-position: center;
+        margin-top: 2%;
+      }
+
+      li[class^="lists"] {
+        padding: 7px 0;
+        width: 50%;
+        cursor: pointer;
+      }
+
+      li[class^="lists"]:hover {
+        /* color: #FFFDB9; */
+        transform: scale(1.06);
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 30px;
+      }
+
+      button {
+        cursor: pointer;
+        border-radius: 10px 10px 10px 10px;
+        -moz-border-radius: 10px 10px 10px 10px;
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border: 0px solid #000000;
+        -webkit-box-shadow: 4px 6px 25px -4px rgba(0,0,0,0.71);
+        -moz-box-shadow: 4px 6px 25px -4px rgba(0,0,0,0.71);
+        box-shadow: 4px 6px 25px -4px rgba(0,0,0,0.71);
+        padding: 10px 30px;
+        color: white;
+        background-color: #2E2E30;
+      }
+
+      button:hover {
+        transform: scale(1.06);
+      }
+
+      .default-color {
+        color: white;
+      }
+      .correct-answer {
+        color: yellow;
+      }
+
+      .incorrect-answer {
+        color: yellow;
+      }
+
+      .result-container {
+        display: flex;
+        justify-content: center;
+      }
+
+      .score {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 60px;
+        font-weight: bold;
+      }
+
+      #first-line {
+        font-size: 24px;
+        color: white;
+      }
+
+    </style>
     <meta charset="utf-8">
     <title></title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="./main.js"></script>
   </head>
   <body>
-    <div class="first">
-      <h1>HELLO</h1>
+    <div class="logo"></div>
+
+    <ul></ul>
+    <div class="result-container">
+      <div id="result"></div>
     </div>
-    <div class="first">
-      <h1>EVERYBODY</h1>
+    <div class="buttons">
+      <button type="button" name="button"id="prev-button">PREVIOUS</button>
+      <button type="button" name="button" id="next-button">NEXT</button>
     </div>
-    <span>hi</span>
   </body>
 </html>

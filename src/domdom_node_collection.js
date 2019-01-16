@@ -30,6 +30,10 @@ export default class DOMDOMNodeCollection {
     return this.htmlElements;
   }
 
+
+
+
+
   attr(arg, str) {
     if (str && typeof str === 'string') {
       this.htmlElements.forEach(e => e.setAttribute(arg, str));
@@ -91,22 +95,24 @@ export default class DOMDOMNodeCollection {
     this.htmlElements.forEach(h => h.parentNode.removeChild(h));
   }
 
-  on(e, cb) {
+  on(eventName, cb) {
     this.htmlElements.forEach(h => {
-      h.addEventListener(e, cb);
-      if (h[e] === undefined) {
-        h[e] = [];
+      h.addEventListener(eventName, cb);
+      const eventKey = `events-${eventName}`;
+      if (h[eventKey] === undefined) {
+        h[eventKey] = [];
       }
-      h[e].push(cb);
+      h[eventKey].push(cb);
     });
   }
 
-  off(e) {
+  off(eventName) {
+    const eventKey = `events-${eventName}`;
     this.htmlElements.forEach(h => {
-      h[e].forEach(cb => h.removeEventListener(e, cb));
-      h[e] = [];
+      h[eventKey].forEach(cb => h.removeEventListener(eventName, cb));
+      h[eventKey] = [];
     });
   }
 
-  
+
 }

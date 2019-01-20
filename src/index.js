@@ -31,8 +31,6 @@ window.$l.extend = (...obj) => {
 };
 
 window.$l.ajax = option => {
-  let request = new XMLHttpRequest();
-
   let defaultOption = {
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
     method: "GET",
@@ -41,6 +39,8 @@ window.$l.ajax = option => {
     error: () => {},
     data: {}
   };
+
+  let request = new XMLHttpRequest();
 
   option = $l.extend(defaultOption, option);
 
@@ -53,20 +53,22 @@ window.$l.ajax = option => {
       option.url += `?${query.substring(0, query.length - 1)}`;
     }
   }
+
   request.open(option.method, option.url, true);
-
-  request.onload = (e) => {
-    if (request.status === 200) {
-      option.success(JSON.parse(request.response));
-    } else {
-      option.error(request.response);
-    }
-  };
-
   request.send(JSON.stringify(option.data));
+
+  return new Promise ((resolve, reject) => {
+    request.onload = () => {
+      if (request.status === 200) {
+        resolve(JSON.parse(request.response));
+      } else {
+        reject(JSON.parse(request.response));
+      }
+    };
+  });
 }
 
-function shuffleArray(array) {
+const shuffleArray = array => {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var temp = array[i];
@@ -74,7 +76,7 @@ function shuffleArray(array) {
         array[j] = temp;
     }
     return array;
-}
+};
 
 const appendQuestions = (rObj, count) => {
   let str = '';
@@ -113,7 +115,7 @@ const renderNextPage = (results) => {
     if (count === 12) {
       $l("#next-button").html("COMPLETE?");
       $l("#next-button").off("click", renderNextPage(results));
-      $l("#prev-button").off("click", renderPrevPage(results));
+      // $l("#prev-button").off("click", renderPrevPage(results));
       $l("#next-button").on("click", renderResultsPage);
     }
   }
@@ -151,43 +153,42 @@ const rerenderPage = e => {
 
   return $l.ajax({
     url: `https://opentdb.com/api.php`,
-    success: response => {
-      count = 0;
-      results = Object.assign([], response.results);
-
-      answers = [];
-      let answerStatus = new Array(12);
-      answerStatus.fill(false, 0, 12);
-
-      results.forEach(r => {
-        answers.push(r.correct_answer);
-      });
-      results = results.map(r => {
-        let arr = r.incorrect_answers.concat(r.correct_answer);
-        for (var i = arr.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
-        let resultsObj = {'question': r.question, 'choices': arr};
-        return resultsObj;
-      });
-
-      separateQuestions(results);
-      $l("#next-button").html("NEXT");
-      $l("#prev-button").html("PREVIOUS");
-      $l("#result").html("");
-      $l("#result").removeClass("main-container");
-      $l("prev-button").attr("style", "pointer-events: none; opacity: 0;");
-      $l("#prev-button").off("click", rerenderPage);
-      $l("#next-button").off("click", renderResultsPage);
-      $l("#next-button").on("click", renderNextPage(results));
-      $l("#prev-button").on("click", renderPrevPage(results));
-      $l("li[class^='lists-']").on("click", checkAnswer);
-      $l("#prev-button").attr('style', 'pointer-events: none; opacity: 0;');
-    },
     data: {"amount": 12, "category": 12, "difficulty": "easy", "type": "multiple"}
+  }).then(response => {
+    count = 0;
+    results = Object.assign([], response.results);
+
+    answers = [];
+    let answerStatus = new Array(12);
+    answerStatus.fill(false, 0, 12);
+
+    results.forEach(r => {
+      answers.push(r.correct_answer);
+    });
+    results = results.map(r => {
+      let arr = r.incorrect_answers.concat(r.correct_answer);
+      for (var i = arr.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = temp;
+      }
+      let resultsObj = {'question': r.question, 'choices': arr};
+      return resultsObj;
+    });
+
+    separateQuestions(results);
+    $l("#next-button").html("NEXT");
+    $l("#prev-button").html("PREVIOUS");
+    $l("#result").html("");
+    $l("#result").removeClass("main-container");
+    $l("prev-button").attr("style", "pointer-events: none; opacity: 0;");
+    $l("#prev-button").off("click", rerenderPage);
+    $l("#next-button").off("click", renderResultsPage);
+    $l("#next-button").on("click", renderNextPage(results));
+    $l("#prev-button").on("click", renderPrevPage(results));
+    $l("li[class^='lists-']").on("click", checkAnswer);
+    $l("#prev-button").attr('style', 'pointer-events: none; opacity: 0;');
   });
 };
 
@@ -246,28 +247,27 @@ const checkIfCorrect = (index, listClass) => {
 
 $l($l.ajax({
   url: `https://opentdb.com/api.php`,
-  success: response => {
-    results = Object.assign([], response.results);
-    results.forEach(r => {
-      answers.push(r.correct_answer);
-    });
-    results = results.map(r => {
-      let arr = r.incorrect_answers.concat(r.correct_answer);
-      for (var i = arr.length - 1; i > 0; i--) {
-          var j = Math.floor(Math.random() * (i + 1));
-          var temp = arr[i];
-          arr[i] = arr[j];
-          arr[j] = temp;
-      }
-      let resultsObj = {'question': r.question, 'choices': arr};
-      return resultsObj;
-    });
-    separateQuestions(results);
-    $l("#next-button").on("click", renderNextPage(results));
-    $l("#prev-button").on("click", renderPrevPage(results));
-    $l("li[class^='lists-']").on("click", checkAnswer);
-  },
   data: {"amount": 12, "category": 12, "difficulty": "easy", "type": "multiple"}
+}).then (response => {
+  results = Object.assign([], response.results);
+  results.forEach(r => {
+    answers.push(r.correct_answer);
+  });
+  results = results.map(r => {
+    let arr = r.incorrect_answers.concat(r.correct_answer);
+    for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    let resultsObj = {'question': r.question, 'choices': arr};
+    return resultsObj;
+  });
+  separateQuestions(results);
+  $l("#next-button").on("click", renderNextPage(results));
+  $l("#prev-button").on("click", renderPrevPage(results));
+  $l("li[class^='lists-']").on("click", checkAnswer);
 }));
 
 document.addEventListener('DOMContentLoaded', () => {

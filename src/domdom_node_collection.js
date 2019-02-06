@@ -30,10 +30,6 @@ export default class DOMDOMNodeCollection {
     return this.htmlElements;
   }
 
-
-
-
-
   attr(arg, str) {
     if (str && typeof str === 'string') {
       this.htmlElements.forEach(e => e.setAttribute(arg, str));

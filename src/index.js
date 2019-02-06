@@ -8,7 +8,6 @@ let count = 0;
 let answerStatus = new Array(12);
 answerStatus.fill(false, 0, 12);
 
-
 window.$l = arg => {
   if (typeof arg === "string") {
     let nodeListArr = document.querySelectorAll(arg);

@@ -4,5 +4,13 @@
 
 ![trivia.gif](trivia.gif)
 
-DOMDOM is a Javascript library inspired by jQuery. DOMDOM offers features like:
-* Selecting one or multiple DOM elements
+DOMDOM is a Javascript library inspired by jQuery.
+
+### What can you do with DOMDOM?
+
+* Select one or multiple corresponding DOM elements as well as their children and parents
+* Append DOM elements inside other DOM elements
+* Add/remove classes on selected DOM elements
+* Queue functions until the DOM is loaded, then invoke them consecutively
+* Apply/remove keyboard/mouse event listeners on selected DOM elements
+* Easily make HTTP requests

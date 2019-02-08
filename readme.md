@@ -6,7 +6,7 @@
 
 DOMDOM is a Javascript library inspired by jQuery.
 
-### What can you do with DOMDOM?
+## What can you do with DOMDOM?
 
 * Select one or multiple corresponding DOM elements as well as their children and parents
 * Append DOM elements inside other DOM elements
@@ -15,7 +15,8 @@ DOMDOM is a Javascript library inspired by jQuery.
 * Apply/remove keyboard/mouse event listeners on selected DOM elements
 * Easily make HTTP requests
 
-### Getting Started
+## Getting Started
+
 To use DOMDOM, simply download this library, and include the file `main.js` in to your HTML header:
 
 ```HTML
@@ -25,7 +26,7 @@ To use DOMDOM, simply download this library, and include the file `main.js` in t
 </head>
 ```
 
-### API
+## API
 
 * ##### `$l(selector)`: $l() is a global variable you can use to select three different data types:
   * **CSS selector**: You can put in a string with the same name as a CSS selector in your HTML file, and it will return a `DOMDOMNodeCollection` class upon which you can apply all the functions that are described in further details hereafter.

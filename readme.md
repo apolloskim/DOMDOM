@@ -22,7 +22,7 @@ DOMDOM is a Javascript library inspired by jQuery.
   * **HTML element**: You can also put in a HTMLElements data type, and it will also return a `DOMDOMNodeCollection` class.
   * **function**: If you put in a function inside this wrapper, it will queue it to a list of functions to be invoked once the DOM is loaded.
 
-* ##### DOM Traversal
+* #### DOM Traversal
   * `children()`:
   Returns `DOMDOMNodeCollection` of all the children elements of all the nodes in the array inside the original `DOMDOMNodeCollection` class. These are only *direct* children.
 
@@ -32,7 +32,7 @@ DOMDOM is a Javascript library inspired by jQuery.
   * `find(selector)`:
   Returns a `DOMDOMNodeCollection` of all the nodes matching the selector passed in as an argument that are descendants of the nodes.
 
-* ##### DOM Manipulation
+* #### DOM Manipulation
   * `html(string)`:
     1. **If no argument is given**: returns the innerHTML of the first node in the `DOMDOMNodeCollection`.
     2. **If argument is given**: *reassigns* the innerHTML of each of the nodes in the `DOMDOMNodeCollection` to the given string argument.
@@ -56,9 +56,39 @@ DOMDOM is a Javascript library inspired by jQuery.
 
   * `remove()`: removes each node in the `DOMDOMNodeCollection`.
 
-* DOM Event Handling
-  * `on(event, callback)`
-  * `off(event, callback)`
+* #### DOM Event Handling
+  * `on(event, callback)`:
+  adds the *event*, as well as a *callback*, to specify an action when that event is triggered to each node in the `DOMDOMNodeCollection`.
+
+  * `off(event, callback)`:
+  if added, removes that *event* from each node in the `DOMDOMNodeCollection`.
 
 * HTTP Request
-  * `$l.ajax(optionHash)`
+  * `$l.ajax(optionHash)`:
+  adds an AJAX function to the `$l` function object. The default HTTP method is `GET`, but you can add an option hash as an argument where you can specify the values of keys like:
+    * **method**: HTTP methods (ex: `GET`, `POST`, `PATCH`, `DELETE`)
+    * **url**: URL of the website that you're making the HTTP request to.
+    * **data**: an object with keys and values where, if the HTTP method is get, the function will make a query string out of.
+    * **success**: callback that will be invoked if the request was successful.
+    * **error**: callback that will be invoked if the request was not successful.
+    * **contentType**: content type of HTTP request (default is **'application/x-www-form-urlencoded; charset=UTF-8'**)
+
+  Since `$l.ajax` returns a *promise*, you can simply specify a success and error callback using `.then()` function instead of passing a callback inside the option hash in the argument.
+  * Example using `.then()`:
+
+  ```Javascript
+  $l.ajax({
+    url: `https://opentdb.com/api.php`,
+    data: {"amount": 12, "category": 12, "difficulty": "easy", "type": "multiple"}
+  }).then(response => console.log(response));
+  ```
+
+  * Example using `success` callback:
+
+  ```javascript
+  $l.ajax({
+    url: `https://opentdb.com/api.php`,
+    data: {"amount": 12, "category": 12, "difficulty": "easy", "type": "multiple"},
+    success: response => console.log(response)
+  });
+  ```

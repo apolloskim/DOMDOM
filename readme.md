@@ -18,9 +18,6 @@ DOMDOM is a Javascript library inspired by jQuery.
 ### API
 
 * `$l`: $l() is a global variable you can use to select three different data types:
-  1. CSS selector
-    * You can put in a string with the same name as a CSS selector in your HTML file, and it will return a DOMDOMNodeCollection class upon which you can apply all the functions that are described in further details hereafter.
-  2. HTML element
-    * You can also put in a HTMLElements data type, and it will also return a DOMDOMNodeCollection class.
-  3. function
-    * If you put in a function inside this wrapper, it will queue it to a list of functions to be invoked once the DOM is loaded. 
+  * **CSS selector**: You can put in a string with the same name as a CSS selector in your HTML file, and it will return a DOMDOMNodeCollection class upon which you can apply all the functions that are described in further details hereafter.
+  * **HTML element**: You can also put in a HTMLElements data type, and it will also return a DOMDOMNodeCollection class.
+  * **function**: If you put in a function inside this wrapper, it will queue it to a list of functions to be invoked once the DOM is loaded.

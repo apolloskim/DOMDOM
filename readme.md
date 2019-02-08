@@ -63,12 +63,12 @@ DOMDOM is a Javascript library inspired by jQuery.
   * `off(event, callback)`:
   if added, removes that *event* from each node in the `DOMDOMNodeCollection`.
 
-* HTTP Request
+* #### HTTP Request
   * `$l.ajax(optionHash)`:
   adds an AJAX function to the `$l` function object. The default HTTP method is `GET`, but you can add an option hash as an argument where you can specify the values of keys like:
     * **method**: HTTP methods (ex: `GET`, `POST`, `PATCH`, `DELETE`)
     * **url**: URL of the website that you're making the HTTP request to.
-    * **data**: an object with keys and values where, if the HTTP method is get, the function will make a query string out of.
+    * **data**: an object with keys and values where, if the HTTP method is `GET`, the function will make a query string out of.
     * **success**: callback that will be invoked if the request was successful.
     * **error**: callback that will be invoked if the request was not successful.
     * **contentType**: content type of HTTP request (default is **'application/x-www-form-urlencoded; charset=UTF-8'**)

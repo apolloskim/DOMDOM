@@ -69,26 +69,14 @@ DOMDOM is a Javascript library inspired by jQuery.
     * **method**: HTTP methods (ex: `GET`, `POST`, `PATCH`, `DELETE`)
     * **url**: URL of the website that you're making the HTTP request to.
     * **data**: an object with keys and values where, if the HTTP method is `GET`, the function will make a query string out of.
-    * **success**: callback that will be invoked if the request was successful.
-    * **error**: callback that will be invoked if the request was not successful.
     * **contentType**: content type of HTTP request (default is **'application/x-www-form-urlencoded; charset=UTF-8'**)
 
-  Since `$l.ajax` returns a *promise*, you can simply specify a success and error callback using `.then()` function instead of passing a callback inside the option hash in the argument.
-  * Example using `.then()`:
+  `$l.ajax` returns a *promise*. You can simply specify a success and error callback using `.then()` function.
+  * Example:
 
   ```Javascript
   $l.ajax({
     url: `https://opentdb.com/api.php`,
     data: {"amount": 12, "category": 12, "difficulty": "easy", "type": "multiple"}
-  }).then(response => console.log(response));
-  ```
-
-  * Example using `success` callback:
-
-  ```javascript
-  $l.ajax({
-    url: `https://opentdb.com/api.php`,
-    data: {"amount": 12, "category": 12, "difficulty": "easy", "type": "multiple"},
-    success: response => console.log(response)
-  });
+  }).then(success => console.log(success), err => console.log(err));
   ```

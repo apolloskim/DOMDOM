@@ -15,6 +15,16 @@ DOMDOM is a Javascript library inspired by jQuery.
 * Apply/remove keyboard/mouse event listeners on selected DOM elements
 * Easily make HTTP requests
 
+### Getting Started
+To use DOMDOM, simply download this library, and include the file `main.js` in to your HTML header:
+
+```HTML
+<head>
+  ...
+  <script type="text/javascript" src="./dist/main.js"></script>
+</head>
+```
+
 ### API
 
 * ##### `$l(selector)`: $l() is a global variable you can use to select three different data types:
